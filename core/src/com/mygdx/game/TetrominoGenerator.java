@@ -1,13 +1,13 @@
 package com.mygdx.game;
 
-import gameObjects.JBlock;
-import gameObjects.LBlock;
-import gameObjects.SBlock;
-import gameObjects.SquareBlock;
-import gameObjects.StraightBlock;
-import gameObjects.TBlock;
-import gameObjects.Tetromino;
-import gameObjects.ZBlock;
+import game.objects.IBlock;
+import game.objects.JBlock;
+import game.objects.LBlock;
+import game.objects.OBlock;
+import game.objects.SBlock;
+import game.objects.TBlock;
+import game.objects.Tetromino;
+import game.objects.ZBlock;
 
 import java.util.Random;
 
@@ -35,10 +35,10 @@ public class TetrominoGenerator
 			block = new SBlock();
 			break;
 		case 3:
-			block = new SquareBlock();
+			block = new OBlock();
 			break;
 		case 4:
-			block = new StraightBlock();
+			block = new IBlock();
 			break;
 		case 5:
 			block = new TBlock();

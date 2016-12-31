@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -10,40 +12,56 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class MyGdxGame extends ApplicationAdapter {
 
-    int fallRate = 100;
-    int inputSeperation = 10;
-    
-    GameFactory gameEntity;
-    GameGraphics graphicsEntity;
+	float fallRate = 1500;
+	float dropRate = 25;
+	float inputSeperation = 50;
 
-    SpriteBatch batch;
+	GameFactory gameEntity;
+	GameGraphics graphicsEntity;
+	Timer timer;
 
-    float timeCounter;
+	SpriteBatch batch;
 
-    @Override
-    public void create() {
-	gameEntity = new GameFactory();
-	gameEntity.createGame();
-	graphicsEntity = new GameGraphics();
-	batch = new SpriteBatch();
-	timeCounter = System.currentTimeMillis();
-    }
+	public float timeCounter;
 
-    @Override
-    public void render() {
-	if(System.currentTimeMillis()-timeCounter > fallRate)
-	{
-	    gameEntity.enactGravity();
-	    timeCounter = System.currentTimeMillis();
+	@Override
+	public void create() {
+		gameEntity = new GameFactory();
+		gameEntity.createGame();
+		graphicsEntity = new GameGraphics();
+		batch = new SpriteBatch();
+		timer = new Timer(fallRate, dropRate, inputSeperation);
 	}
-	if (System.currentTimeMillis()-timeCounter > fallRate)
-	
-	graphicsEntity.draw(batch, gameEntity.retrieveGameState());
-    }
 
-    @Override
-    public void dispose() {
-	batch.dispose();
-	graphicsEntity.disposeTextures();
-    }
+	@Override
+	public void render() {
+	
+		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && timer.allowDrop())
+			gameEntity.enactGravity();
+		else if (timer.allowFall())
+		{
+			
+		}
+			//gameEntity.enactGravity();
+		if (timer.allowInput()) {
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				gameEntity.moveLeft();
+			}
+			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				gameEntity.moveRight();
+			}
+			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				gameEntity.rotateClockwise();
+			}
+			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
+				gameEntity.rotateCounterClockwise();
+			}
+		}
+		graphicsEntity.draw(batch, gameEntity.retrieveGameState());
+	}
+	@Override
+	public void dispose() {
+		batch.dispose();
+		graphicsEntity.disposeTextures();
+	}
 }
