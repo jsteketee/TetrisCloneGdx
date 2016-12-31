@@ -14,7 +14,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	float fallRate = 1500;
 	float dropRate = 25;
-	float inputSeperation = 50;
+	float inputSeperation = 160;
 
 	GameFactory gameEntity;
 	GameGraphics graphicsEntity;

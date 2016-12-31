@@ -69,8 +69,8 @@ public abstract class Tetromino {
 		for (int i = 1; i < block.length; i++) {
 			x = block[i].x - origin.x;
 			y = block[i].y - origin.y;
-			block[i].x = y + origin.x;
-			block[i].y = -x + origin.y;
+			block[i].x = -y + origin.x;
+			block[i].y = x + origin.y;
 		}
 	}
 }

@@ -56,13 +56,11 @@ public class GameFactory {
 	public void rotateClockwise() {
 		Tetromino curBlock = curGame.getCurBlock();
 		curBlock.rotateRight();
-		//if (isCollision()) {
-		//	curBlock.rotateLeft();
-		//}
-	
-	
+		if (isCollision()) {
+			curBlock.rotateLeft();
+		}
 	}
-	
+
 	public void rotateCounterClockwise() {
 		Tetromino curBlock = curGame.getCurBlock();
 		curBlock.rotateLeft();
@@ -80,7 +78,8 @@ public class GameFactory {
 	private boolean isCollision() {
 		boolean collision = false;
 		for (Tile t : curGame.getCurBlock().getTiles()) {
-			if (t.getX() < 1 || t.getX() > GameGrid.WIDTH || t.getY() < 1 || t.getY() > GameGrid.HEIGHT)
+			if (t.getX() < 1 || t.getX() > GameGrid.WIDTH || t.getY() < 1
+					|| t.getY() > GameGrid.HEIGHT)
 				collision = true;
 			else if (curGame.getGrid().getTileAt(t.getX(), t.getY()) != 0)
 				collision = true;
