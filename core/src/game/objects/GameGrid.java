@@ -44,4 +44,10 @@ public class GameGrid {
 	public void setTileAt(int x, int y, int color) {
 		grid[GameGrid.HEIGHT - y][x - 1] = color;
 	}
+	public void shiftRow(int startY, int destY) {
+		for (int x = 1; x <= GameGrid.HEIGHT; x++) {
+			setTileAt(x, destY, getTileAt(x, startY));
+		}
+	}
+
 }

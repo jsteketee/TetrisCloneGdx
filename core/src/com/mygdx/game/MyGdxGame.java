@@ -14,7 +14,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	float fallRate = 1500;
 	float dropRate = 25;
-	float inputSeperation = 160;
+	float inputSeperation = 50;
 
 	GameFactory gameEntity;
 	GameGraphics graphicsEntity;
@@ -37,12 +37,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render() {
 	
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && timer.allowDrop())
-			gameEntity.enactGravity();
+			gameEntity.moveDown();
 		else if (timer.allowFall())
-		{
-			
-		}
-			//gameEntity.enactGravity();
+			gameEntity.moveDown();
 		if (timer.allowInput()) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 				gameEntity.moveLeft();

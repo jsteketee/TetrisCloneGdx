@@ -21,9 +21,11 @@ public class TetrisGame {
 		curBlock = blockBank.getRandomBlock();
 		nextBlock = blockBank.getRandomBlock();
 	}
-
 	public GameGrid getGrid() {
 		return this.grid;
+	}
+	public void setGrid(GameGrid grid) {
+		this.grid = grid;
 	}
 	public Tetromino getCurBlock() {
 		return this.curBlock;
