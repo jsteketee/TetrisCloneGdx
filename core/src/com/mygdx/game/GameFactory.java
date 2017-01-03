@@ -8,7 +8,8 @@ import game.objects.Tetromino;
 import game.objects.Tetromino.Tile;
 
 /**
- * GameFactory keeps the current game and contains methods for maintaining it.
+ * GameFactory keeps the current game and contains implementation independent
+ * methods for maintaining it.
  * 
  * @author jsteketee
  */
@@ -81,8 +82,6 @@ public class GameFactory {
 			if (full)
 				fullLine.add(y);
 		}
-		for (int i : fullLine)
-			System.out.println(i);
 		return fullLine;
 	}
 

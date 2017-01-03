@@ -30,11 +30,11 @@ public class GameGraphics {
 		grid = new Texture("grid.png");
 
 		tiles[0] = null;
-		tiles[1] = new Texture("JTile.png");
-		tiles[2] = new Texture("LTile.png");
-		tiles[3] = new Texture("STile.png");
+		tiles[1] = new Texture("ITile.png");
+		tiles[2] = new Texture("JTile.png");
+		tiles[3] = new Texture("LTile.png");
 		tiles[4] = new Texture("OTile.png");
-		tiles[5] = new Texture("ITile.png");
+		tiles[5] = new Texture("STile.png");
 		tiles[6] = new Texture("TTile.png");
 		tiles[7] = new Texture("ZTile.png");
 
@@ -84,8 +84,7 @@ public class GameGraphics {
 					gridLocationY - 5 + (squareWidth + TILE_MARGIN) * i);
 		for (int i = 1; i <= curGame.getGrid().WIDTH; i++)
 			font.draw(batch, String.valueOf(i), gridLocationX - 16
-					+ (squareWidth + TILE_MARGIN) * i, gridLocationY-10
-				);
+					+ (squareWidth + TILE_MARGIN) * i, gridLocationY - 10);
 	}
 	private void drawTileAt(Batch batch, int x, int y, int color) {
 		batch.draw(tiles[color], (gridLocationX) + (squareWidth + TILE_MARGIN)

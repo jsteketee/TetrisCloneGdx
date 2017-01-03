@@ -1,7 +1,5 @@
 package game.objects;
 
-import com.mygdx.game.TetrominoGenerator;
-
 import game.objects.Tetromino.Tile;
 
 /**

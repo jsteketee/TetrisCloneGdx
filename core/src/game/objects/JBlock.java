@@ -2,7 +2,7 @@ package game.objects;
 
 public class JBlock extends Tetromino {
 	public JBlock() {
-		this.color = 1;
+		this.color = 2;
 		int startHeight = GameGrid.HEIGHT;
 		int startWidth = Math.round(GameGrid.WIDTH / 2);
 		this.block[0] = new Tile(startWidth, startHeight - 1);

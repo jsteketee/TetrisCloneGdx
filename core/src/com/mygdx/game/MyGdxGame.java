@@ -35,7 +35,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-	
+
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && timer.allowDrop())
 			gameEntity.moveDown();
 		else if (timer.allowFall())

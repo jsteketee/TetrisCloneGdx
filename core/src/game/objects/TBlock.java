@@ -1,9 +1,7 @@
 package game.objects;
 
-public class TBlock extends Tetromino
-{
-	public TBlock()
-	{
+public class TBlock extends Tetromino {
+	public TBlock() {
 		this.color = 6;
 		int startHeight = GameGrid.HEIGHT;
 		int startWidth = Math.round(GameGrid.WIDTH / 2);
