@@ -4,7 +4,6 @@ import game.objects.Tetromino.Tile;
 
 /**
  * Keeps the state of the current game.
- * 
  * @author jsteketee
  */
 public class TetrisGame {
@@ -44,5 +43,21 @@ public class TetrisGame {
 	public void cycleCurBlock() {
 		curBlock = nextBlock;
 		nextBlock = blockBank.getRandomBlock();
+	}
+	/**
+	 * Checks if the current Tetromino is out of bounds or at the same location
+	 * as another rooted tile.
+	 * @return the occurrence of a collision.
+	 */
+	public boolean isCollision() {
+		boolean collision = false;
+		for (Tile t : curBlock.getTiles()) {
+			if (t.getX() < 1 || t.getX() > GameGrid.WIDTH || t.getY() < 1
+					|| t.getY() > GameGrid.HEIGHT || grid.isTileAt(t.getX(), t.getY())) {
+				collision = true;
+				break;
+			}
+		}
+		return collision;
 	}
 }

@@ -8,16 +8,14 @@ import game.objects.Tetromino;
 import game.objects.Tetromino.Tile;
 
 /**
- * GameFactory keeps the current game and contains implementation independent
- * methods for maintaining it.
- * 
+ * GameFactory keeps the current game and contains high level logic for
+ * maintaining it.
  * @author jsteketee
  */
 public class GameFactory {
 	private TetrisGame curGame;
 
-	public GameFactory() {
-	}
+	public GameFactory() {}
 
 	public void createGame() {
 		TetrisGame game = new TetrisGame();
@@ -28,6 +26,37 @@ public class GameFactory {
 		return curGame;
 	}
 
+	public void moveLeft() {
+		Tetromino curBlock = curGame.getCurBlock();
+		curBlock.translateLeft();
+		if (curGame.isCollision()) {
+			curBlock.translateRight();
+		}
+	}
+
+	public void moveRight() {
+		Tetromino curBlock = curGame.getCurBlock();
+		curBlock.translateRight();
+		if (curGame.isCollision()) {
+			curBlock.translateLeft();
+		}
+	}
+	public void rotateClockwise() {
+		Tetromino curBlock = curGame.getCurBlock();
+		curBlock.rotateRight();
+		if (curGame.isCollision()) {
+			curBlock.rotateLeft();
+		}
+	}
+
+	public void rotateCounterClockwise() {
+		Tetromino curBlock = curGame.getCurBlock();
+		curBlock.rotateLeft();
+		if (curGame.isCollision()) {
+			curBlock.rotateRight();
+		}
+	}
+
 	/**
 	 * Translates the Tetromino down one space. If this is not possible then the
 	 * Tetromino is rooted and a new one is generated.
@@ -35,7 +64,7 @@ public class GameFactory {
 	public void moveDown() {
 		Tetromino curBlock = curGame.getCurBlock();
 		curBlock.translateDown();
-		if (isCollision()) {
+		if (curGame.isCollision()) {
 			curBlock.translateUp();
 			curGame.rootBlock();
 			curGame.cycleCurBlock();
@@ -49,88 +78,28 @@ public class GameFactory {
 	private void clearFullLines() {
 		ArrayList<Integer> fullLines = findLines();
 		if (!fullLines.isEmpty()) {
-			GameGrid oldGrid = curGame.getGrid();
-			GameGrid newGrid = new GameGrid();
-			int rowToFill = 1;
+			GameGrid grid = curGame.getGrid();
+			int shiftDown;
 			for (int y = 1; y <= GameGrid.HEIGHT; y++) {
-				if (!fullLines.contains(y)) {
-					for (int x = 1; x <= GameGrid.WIDTH; x++)
-						newGrid.setTileAt(x, rowToFill, oldGrid.getTileAt(x, y));
-					rowToFill++;
+				shiftDown=0;
+				for (int i : fullLines) {
+					if (i < y)
+						++shiftDown;
 				}
+				if (shiftDown != 0) grid.shiftRow(y, y - shiftDown);
 			}
-			curGame.setGrid(newGrid);
 		}
 	}
 	/**
 	 * Returns an arrayList signifying which rows of the grid are to be cleared.
-	 * 
 	 * @return fullLine the list of full lines
 	 */
 	private ArrayList<Integer> findLines() {
 		ArrayList<Integer> fullLine = new ArrayList<Integer>();
 		GameGrid grid = curGame.getGrid();
-		boolean full;
 		for (int y = 1; y <= GameGrid.HEIGHT; y++) {
-			full = true;
-			for (int x = 1; x <= GameGrid.WIDTH; x++) {
-				if (grid.getTileAt(x, y) == 0) {
-					full = false;
-					break;
-				}
-			}
-			if (full)
-				fullLine.add(y);
+			if (grid.isFullRow(y)) fullLine.add(y);
 		}
 		return fullLine;
-	}
-
-	public void moveLeft() {
-		Tetromino curBlock = curGame.getCurBlock();
-		curBlock.translateLeft();
-		if (isCollision()) {
-			curBlock.translateRight();
-		}
-	}
-
-	public void moveRight() {
-		Tetromino curBlock = curGame.getCurBlock();
-		curBlock.translateRight();
-		if (isCollision()) {
-			curBlock.translateLeft();
-		}
-	}
-	public void rotateClockwise() {
-		Tetromino curBlock = curGame.getCurBlock();
-		curBlock.rotateRight();
-		if (isCollision()) {
-			curBlock.rotateLeft();
-		}
-	}
-
-	public void rotateCounterClockwise() {
-		Tetromino curBlock = curGame.getCurBlock();
-		curBlock.rotateLeft();
-		if (isCollision()) {
-			curBlock.rotateRight();
-		}
-	}
-
-	/**
-	 * Checks if the moved Tetromino will be on top of a rooted tile or out of
-	 * bounds.
-	 * 
-	 * @return
-	 */
-	private boolean isCollision() {
-		boolean collision = false;
-		for (Tile t : curGame.getCurBlock().getTiles()) {
-			if (t.getX() < 1 || t.getX() > GameGrid.WIDTH || t.getY() < 1
-					|| t.getY() > GameGrid.HEIGHT)
-				collision = true;
-			else if (curGame.getGrid().getTileAt(t.getX(), t.getY()) != 0)
-				collision = true;
-		}
-		return collision;
 	}
 }
