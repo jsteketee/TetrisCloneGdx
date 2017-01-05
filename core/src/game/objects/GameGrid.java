@@ -67,12 +67,10 @@ public class GameGrid {
 	 */
 	public void shiftRow(int startY, int destY) {
 		// TODO
-		if (destY != 1) {
 			for (int x = 1; x <= GameGrid.WIDTH; x++) {
 				setTileAt(x, destY, getTileAt(x, startY));
 			}
-			// grid[GameGrid.HEIGHT - destY] = grid[GameGrid.HEIGHT - startY];
-		}
+			// grid[GameGrid.HEIGHT - destY] = grid[GameGrid.HEIGHT - startY];~
 	}
 
 }

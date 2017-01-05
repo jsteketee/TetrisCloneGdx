@@ -19,12 +19,10 @@ public class GameGraphics {
 
 	BitmapFont font;
 
-	int windowWidth;
 	int gridWidth;
-	int gridLocationX;
-	int gridLocationY;
-	int squareWidth;
-	final int TILE_MARGIN = 1;
+	int gridLocationX = 320;
+	int gridLocationY = 50;
+	int deltaSquare;
 
 	public GameGraphics() {
 		grid = new Texture("grid.png");
@@ -41,11 +39,8 @@ public class GameGraphics {
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
 
-		windowWidth = Gdx.graphics.getWidth();
 		gridWidth = grid.getWidth();
-		gridLocationX = windowWidth / 2 - gridWidth / 2 + windowWidth / 4;
-		gridLocationY = 50;
-		squareWidth = tiles[1].getWidth();
+		deltaSquare = tiles[1].getWidth() + 1;
 	}
 
 	public void draw(Batch batch, TetrisGame curGame) {
@@ -55,7 +50,16 @@ public class GameGraphics {
 		drawGrid(batch, curGame);
 		drawGridNumbers(batch, curGame);
 		drawCurShape(batch, curGame);
+		drawNextShape(batch, curGame);
 		batch.end();
+	}
+	private void drawNextShape(Batch batch, TetrisGame curGame) {
+		Tetromino nextBlock = curGame.getNextBlock();
+		Tile[] tiles = nextBlock.getTiles();
+		for (Tile t : tiles)
+			drawTileAt(batch, t.getX() - 8, t.getY(), nextBlock.getColor());
+		font.draw(batch, "Next Shape:", gridLocationX - 5 * deltaSquare, gridLocationY
+				+ (deltaSquare * GameGrid.HEIGHT) + deltaSquare);
 	}
 	private void drawBackground() {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -79,17 +83,16 @@ public class GameGraphics {
 		}
 	}
 	private void drawGridNumbers(Batch batch, TetrisGame curGame) {
-		for (int i = 1; i <= curGame.getGrid().HEIGHT; i++)
-			font.draw(batch, String.valueOf(i), gridLocationX - squareWidth,
-					gridLocationY - 5 + (squareWidth + TILE_MARGIN) * i);
-		for (int i = 1; i <= curGame.getGrid().WIDTH; i++)
-			font.draw(batch, String.valueOf(i), gridLocationX - 16
-					+ (squareWidth + TILE_MARGIN) * i, gridLocationY - 10);
+		for (int i = 1; i <= GameGrid.HEIGHT; i++)
+			font.draw(batch, String.valueOf(i), gridLocationX - deltaSquare, gridLocationY - 5
+					+ (deltaSquare) * i);
+		for (int i = 1; i <= GameGrid.WIDTH; i++)
+			font.draw(batch, String.valueOf(i), gridLocationX - 16 + (deltaSquare) * i,
+					gridLocationY - 10);
 	}
 	private void drawTileAt(Batch batch, int x, int y, int color) {
-		batch.draw(tiles[color], (gridLocationX) + (squareWidth + TILE_MARGIN)
-				* (x - 1), (gridLocationY) + (squareWidth + TILE_MARGIN)
-				* (y - 1));
+		batch.draw(tiles[color], (gridLocationX) + (deltaSquare) * (x - 1), (gridLocationY)
+				+ (deltaSquare) * (y - 1));
 	}
 	public void disposeTextures() {
 		grid.dispose();
