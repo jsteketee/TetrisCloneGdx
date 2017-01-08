@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import game.objects.GameGrid;
 import game.objects.TetrisGame;
 import game.objects.Tetromino;
-import game.objects.Tetromino.Tile;
 
 /**
  * GameFactory keeps the current game and contains high level logic for
@@ -13,7 +12,9 @@ import game.objects.Tetromino.Tile;
  * @author jsteketee
  */
 public class GameFactory {
+
 	private TetrisGame curGame;
+	private boolean linesToClear = false;
 
 	public GameFactory() {}
 
@@ -60,31 +61,45 @@ public class GameFactory {
 	/**
 	 * Translates the Tetromino down one space. If this is not possible then the
 	 * Tetromino is rooted and a new one is generated.
+	 * @Return Whether or not a block was rooted on this method call.
 	 */
-	public void moveDown() {
-		Tetromino curBlock = curGame.getCurBlock();
-		curBlock.translateDown();
-		if (curGame.isCollision()) {
-			curBlock.translateUp();
-			curGame.rootBlock();
+	public boolean moveDown() {
+		if (linesToClear) {
 			curGame.cycleCurBlock();
-			clearFullLines();
+			clearFullLines(curGame.getFullLines());
+			curGame.getFullLines().clear();
+			linesToClear = false;
 		}
+		else {
+			Tetromino curBlock = curGame.getCurBlock();
+			curBlock.translateDown();
+			if (curGame.isCollision()) {
+				curBlock.translateUp();
+				curGame.rootBlock();
+				curGame.setFullLines(findLines());
+				if (!curGame.getFullLines().isEmpty()) {
+					linesToClear = true;
+				}
+				else {
+					curGame.cycleCurBlock();
+				}
+			}
+		}
+		return linesToClear;
 	}
+
 	/**
 	 * clears any full lines and updates the positions of tiles on the grid
 	 * accordingly.
 	 */
-	private void clearFullLines() {
-		ArrayList<Integer> fullLines = findLines();
+	private void clearFullLines(ArrayList<Integer> fullLines) {
 		if (!fullLines.isEmpty()) {
 			GameGrid grid = curGame.getGrid();
 			int shiftDown;
 			for (int y = 1; y <= GameGrid.HEIGHT; y++) {
-				shiftDown=0;
+				shiftDown = 0;
 				for (int i : fullLines) {
-					if (i < y)
-						++shiftDown;
+					if (i < y) ++shiftDown;
 				}
 				if (shiftDown != 0) grid.shiftRow(y, y - shiftDown);
 			}

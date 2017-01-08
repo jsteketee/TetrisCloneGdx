@@ -1,5 +1,7 @@
 package game.objects;
 
+import java.util.ArrayList;
+
 import game.objects.Tetromino.Tile;
 
 /**
@@ -11,12 +13,15 @@ public class TetrisGame {
 	private Tetromino curBlock;
 	private Tetromino nextBlock;
 	private TetrominoGenerator blockBank;
-
+	private ArrayList<Integer> fullLines = new ArrayList<Integer>();
+	private ScoreKeeper scoreKeeper;
+	
 	public TetrisGame() {
 		grid = new GameGrid();
 		blockBank = new TetrominoGenerator();
 		curBlock = blockBank.getRandomBlock();
 		nextBlock = blockBank.getRandomBlock();
+		setScore(new ScoreKeeper());
 	}
 	public GameGrid getGrid() {
 		return this.grid;
@@ -59,5 +64,18 @@ public class TetrisGame {
 			}
 		}
 		return collision;
+	}
+	public ArrayList<Integer> getFullLines() {
+		return fullLines;
+	}
+	public void setFullLines(ArrayList<Integer> fullLines) {
+		this.fullLines = fullLines;
+		scoreKeeper.scoreLineClear(fullLines);
+	}
+	public ScoreKeeper getScore() {
+		return scoreKeeper;
+	}
+	public void setScore(ScoreKeeper score) {
+		this.scoreKeeper = score;
 	}
 }

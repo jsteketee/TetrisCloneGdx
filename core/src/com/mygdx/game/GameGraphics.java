@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameGraphics {
 
@@ -27,7 +28,7 @@ public class GameGraphics {
 	public GameGraphics() {
 		grid = new Texture("grid.png");
 
-		tiles[0] = null;
+		tiles[0] = new Texture("ClearRow.png");
 		tiles[1] = new Texture("ITile.png");
 		tiles[2] = new Texture("JTile.png");
 		tiles[3] = new Texture("LTile.png");
@@ -43,7 +44,7 @@ public class GameGraphics {
 		deltaSquare = tiles[1].getWidth() + 1;
 	}
 
-	public void draw(Batch batch, TetrisGame curGame) {
+	public void draw(Batch batch, TetrisGame curGame, boolean animationFlash) {
 		drawBackground();
 		batch.begin();
 		batch.draw(grid, gridLocationX, gridLocationY);
@@ -51,8 +52,19 @@ public class GameGraphics {
 		drawGridNumbers(batch, curGame);
 		drawCurShape(batch, curGame);
 		drawNextShape(batch, curGame);
+		drawScore(batch, curGame);
+		if (animationFlash) {
+			for (int y : curGame.getFullLines()) {
+				drawTileAt(batch, 1, y, tiles[0]);
+			}
+		}
 		batch.end();
 	}
+	private void drawScore(Batch batch, TetrisGame curGame) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void drawNextShape(Batch batch, TetrisGame curGame) {
 		Tetromino nextBlock = curGame.getNextBlock();
 		Tile[] tiles = nextBlock.getTiles();
@@ -93,6 +105,10 @@ public class GameGraphics {
 	private void drawTileAt(Batch batch, int x, int y, int color) {
 		batch.draw(tiles[color], (gridLocationX) + (deltaSquare) * (x - 1), (gridLocationY)
 				+ (deltaSquare) * (y - 1));
+	}
+	private void drawTileAt(Batch batch, int x, int y, Texture t) {
+		batch.draw(t, (gridLocationX) + (deltaSquare) * (x - 1), (gridLocationY) + (deltaSquare)
+				* (y - 1));
 	}
 	public void disposeTextures() {
 		grid.dispose();

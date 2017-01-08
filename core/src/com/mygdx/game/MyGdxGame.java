@@ -15,6 +15,11 @@ public class MyGdxGame extends ApplicationAdapter {
 	float dropRate = 25;
 	float inputSeperation = 67;
 
+	float lineClearAnimationFreq = 200;
+	float lineClearAnimationDuration = 1000;
+
+	boolean isAnimation = false;
+
 	GameFactory gameEntity;
 	GameGraphics graphicsEntity;
 	Timer timer;
@@ -27,22 +32,34 @@ public class MyGdxGame extends ApplicationAdapter {
 		gameEntity.createGame();
 		graphicsEntity = new GameGraphics();
 		batch = new SpriteBatch();
-		timer = new Timer(fallRate, dropRate, inputSeperation);
+		timer = new Timer(fallRate, dropRate, inputSeperation, lineClearAnimationDuration,
+				lineClearAnimationFreq);
 	}
 
 	@Override
 	public void render() {
-		if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && timer.allowDrop())
-			gameEntity.moveDown();
-		else if (timer.allowFall()) gameEntity.moveDown();
-		if (timer.allowInput()) {
-			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) gameEntity.moveLeft();
-			if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) gameEntity.moveRight();
-			if (Gdx.input.isKeyPressed(Input.Keys.UP)) gameEntity.rotateClockwise();
-			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))
-				gameEntity.rotateCounterClockwise();
+		if (isAnimation) {
+			graphicsEntity.draw(batch, gameEntity.retrieveGameState(), timer.isAnimationFlash());
+			isAnimation = timer.isAnimation();
 		}
-		graphicsEntity.draw(batch, gameEntity.retrieveGameState());
+		else {
+			if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && timer.allowDrop()) {
+				isAnimation = gameEntity.moveDown();
+				if (isAnimation) timer.startAnimationTimer();
+			}
+			else if (timer.allowFall()) {
+				isAnimation = gameEntity.moveDown();
+				if (isAnimation) timer.startAnimationTimer();
+			}
+			if (timer.allowInput()) {
+				if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) gameEntity.moveLeft();
+				if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) gameEntity.moveRight();
+				if (Gdx.input.isKeyPressed(Input.Keys.UP)) gameEntity.rotateClockwise();
+				if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))
+					gameEntity.rotateCounterClockwise();
+			}
+			graphicsEntity.draw(batch, gameEntity.retrieveGameState(), false);
+		}
 	}
 	@Override
 	public void dispose() {
