@@ -17,6 +17,7 @@ public class GameGraphics {
 
 	Texture grid;
 	Texture[] tiles = new Texture[8];
+	Texture gameOver = new Texture("GameOver.png");
 
 	BitmapFont font;
 
@@ -53,6 +54,10 @@ public class GameGraphics {
 		drawCurShape(batch, curGame);
 		drawNextShape(batch, curGame);
 		drawScore(batch, curGame);
+		if (curGame.isGameOver()) {
+			drawGameOver(batch);
+		}
+
 		if (animationFlash) {
 			for (int y : curGame.getFullLines()) {
 				drawTileAt(batch, 1, y, tiles[0]);
@@ -61,8 +66,13 @@ public class GameGraphics {
 		batch.end();
 	}
 	private void drawScore(Batch batch, TetrisGame curGame) {
-		// TODO Auto-generated method stub
-		
+		font.draw(batch, "HighScore", gridLocationX - 10 * deltaSquare, gridLocationY
+				+ (deltaSquare * GameGrid.HEIGHT) + deltaSquare);
+		font.draw(batch, String.valueOf(curGame.getScore()), gridLocationX - 10 * deltaSquare,
+				gridLocationY + (deltaSquare * GameGrid.HEIGHT) - deltaSquare);
+	}
+	private void drawGameOver(Batch batch) {
+		batch.draw(gameOver, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	private void drawNextShape(Batch batch, TetrisGame curGame) {

@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="game.objects.Tetromino" project="TetrisClone-core" 
     file="/TetrisClone-core/src/game/objects/Tetromino.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="243" width="128" x="862" y="175"/>    
+    <position height="-1" width="-1" x="1181" y="155"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="game.objects.TetrominoGenerator" project="TetrisClone-core" 
     file="/TetrisClone-core/src/game/objects/TetrominoGenerator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="117" width="163" x="481" y="175"/>    
+    <position height="-1" width="-1" x="339" y="151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="game.objects.GameGrid" project="TetrisClone-core" 
     file="/TetrisClone-core/src/game/objects/GameGrid.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="189" width="138" x="684" y="175"/>    
+    <position height="-1" width="-1" x="580" y="301"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -111,74 +111,94 @@
   </class>  
   <association id="13">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="14" name="curBlock"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
+      <attribute id="14" name="curBlock">        
+        <position height="0" width="0" x="255" y="-141"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="255" y="-141"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="16">    
-    <end type="SOURCE" refId="4"/>    
+  <association id="16">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="17" name="nextBlock">        
+        <position height="0" width="0" x="255" y="-141"/>      
+      </attribute>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="255" y="-141"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <generalization id="17">    
+  <generalization id="20">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="21">    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <association id="18">    
+  <nesting id="22">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <association id="23">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="19" name="grid"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+      <attribute id="24" name="grid">        
+        <position height="0" width="0" x="-173" y="32"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-173" y="32"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="21">    
-    <end type="SOURCE" refId="11"/>    
+  <generalization id="26">    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <association id="22">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="23" name="nextBlock"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="25">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <nesting id="26">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="10"/>  
-  </nesting>  
   <association id="27">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="28" name="blockBank"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
+      <attribute id="28" name="blockBank">        
+        <position height="0" width="0" x="-223" y="-82"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-223" y="-82"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="30">    
-    <end type="SOURCE" refId="6"/>    
+    <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <association id="31">    
+  <generalization id="31">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="32">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="32" name="block"/>      
-      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+      <attribute id="33" name="block">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
   <generalization id="35">    
-    <end type="SOURCE" refId="2"/>    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

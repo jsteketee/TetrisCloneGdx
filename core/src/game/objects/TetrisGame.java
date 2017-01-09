@@ -15,13 +15,14 @@ public class TetrisGame {
 	private TetrominoGenerator blockBank;
 	private ArrayList<Integer> fullLines = new ArrayList<Integer>();
 	private ScoreKeeper scoreKeeper;
-	
+	private boolean gameOver = false;
+
 	public TetrisGame() {
 		grid = new GameGrid();
 		blockBank = new TetrominoGenerator();
 		curBlock = blockBank.getRandomBlock();
 		nextBlock = blockBank.getRandomBlock();
-		setScore(new ScoreKeeper());
+		scoreKeeper = new ScoreKeeper();
 	}
 	public GameGrid getGrid() {
 		return this.grid;
@@ -48,6 +49,7 @@ public class TetrisGame {
 	public void cycleCurBlock() {
 		curBlock = nextBlock;
 		nextBlock = blockBank.getRandomBlock();
+		gameOver = isCollision();
 	}
 	/**
 	 * Checks if the current Tetromino is out of bounds or at the same location
@@ -72,10 +74,13 @@ public class TetrisGame {
 		this.fullLines = fullLines;
 		scoreKeeper.scoreLineClear(fullLines);
 	}
-	public ScoreKeeper getScore() {
-		return scoreKeeper;
+	public long getScore() {
+		return scoreKeeper.getScore();
 	}
-	public void setScore(ScoreKeeper score) {
-		this.scoreKeeper = score;
+	public void setScore(int score) {
+		this.scoreKeeper.setScore(score);
+	}
+	public boolean isGameOver() {
+		return gameOver;
 	}
 }
