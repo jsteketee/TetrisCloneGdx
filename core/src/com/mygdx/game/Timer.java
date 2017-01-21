@@ -1,15 +1,15 @@
 package com.mygdx.game;
 
 public class Timer {
+
 	private float fallRate;
 	private float dropRate;
 	private float inputSeperation;
 	private float lineClearAnimationDur;
 	private float lineClearAnimationFreq;
-	private long fallTimer = 0;
-	private long inputTimer = 0;
-	private long animationTimer = 0;
-	private long flashTimer = 0;
+	private long fallTimer, fallAcellTimer, inputTimer, animationTimer, flashTimer, gameStart;
+	private float fallAcellCheck = 200;
+	private float FALLACELLERATION = (float) -0.000001;
 	boolean animationFlash = true;
 
 	public Timer(float fallRate, float dropRate, float inputSeperation,
@@ -19,6 +19,8 @@ public class Timer {
 		this.inputSeperation = inputSeperation;
 		this.lineClearAnimationDur = lineClearAnimationDur;
 		this.lineClearAnimationFreq = lineClearAnimationFreq;
+		fallTimer = inputTimer = animationTimer = flashTimer = gameStart = fallAcellTimer = System
+				.currentTimeMillis();
 	}
 	public boolean allowFall() {
 		boolean fall = false;
@@ -26,6 +28,7 @@ public class Timer {
 			fall = true;
 			fallTimer = System.currentTimeMillis();
 		}
+		updateFallRate();
 		return fall;
 	}
 	public boolean allowDrop() {
@@ -34,6 +37,7 @@ public class Timer {
 			drop = true;
 			fallTimer = System.currentTimeMillis();
 		}
+		
 		return drop;
 	}
 	public boolean allowInput() {
@@ -63,5 +67,14 @@ public class Timer {
 	public void startAnimationTimer() {
 		animationTimer = System.currentTimeMillis();
 		animationFlash = true;
+	}
+	private void updateFallRate()
+	{
+		if (System.currentTimeMillis() - fallAcellTimer > fallAcellCheck) {
+			float elapsedTime = System.currentTimeMillis() - gameStart;
+			fallRate = (float) (500*Math.pow(Math.E, elapsedTime*FALLACELLERATION));
+			System.out.println(fallRate);
+			fallAcellTimer = System.currentTimeMillis();
+		}
 	}
 }

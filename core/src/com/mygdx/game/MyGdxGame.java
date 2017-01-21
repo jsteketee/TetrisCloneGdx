@@ -13,7 +13,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	float fallRate = 500;
 	float dropRate = 25;
-	float inputSeperation = 67;
+	float inputSeperation = 53;
 
 	float lineClearAnimationFreq = 200;
 	float lineClearAnimationDuration = 1000;

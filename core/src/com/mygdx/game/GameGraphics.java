@@ -57,7 +57,6 @@ public class GameGraphics {
 		if (curGame.isGameOver()) {
 			drawGameOver(batch);
 		}
-
 		if (animationFlash) {
 			for (int y : curGame.getFullLines()) {
 				drawTileAt(batch, 1, y, tiles[0]);
